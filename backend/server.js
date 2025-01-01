@@ -1,18 +1,22 @@
-const express = require('express');
-const connectDB = require('./config/db');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+import express from 'express';
+import connectDB from './config/db.js';
+import { config } from 'dotenv';
+import cors from 'cors';
+import userRoutes from './routes/user.routes.js';
+import authMiddleware from './middleware/auth.middleware.js';
 
-dotenv.config();
+config();
 connectDB();
 
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-// app.use('/api/auth', require('./routes/auth'));
+app.use(authMiddleware);
+app.use('/api', userRoutes);
+
 
 const PORT = process.env.PORT || 5001;
 
