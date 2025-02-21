@@ -4,7 +4,7 @@
     <h1>Welcome, Tarunteja</h1>
   </div>
   
-  <div class="title overview">
+  <div class="overview">
     <h1>Overview</h1>
   </div>
   <div class="dashboard-info-card balance-card">
@@ -31,7 +31,7 @@
       <h1>$1,899</h1>
     </div>
   </div>
-  <div class="title transactions">
+  <div class="transactions">
     <h1>Transactions</h1>
   </div>
   <div class="new-transaction">
@@ -54,7 +54,7 @@
       </div>
     </div>
   </div>
-  <div class="title categories">
+  <div class="categories">
     <h1>Categories</h1>
   </div>
   <div class="new-category">
@@ -69,7 +69,7 @@
       </div>
     </div>
   </div>
-  <div class="title cards">
+  <div class="cards">
     <h1>Cards</h1>
   </div>
   <div class="new-card">
@@ -259,7 +259,6 @@ export default {
 .title {
   margin-inline: 10px;
   margin-top: 20px;
-  grid-column: 1/9;
 }
 
 .title h1 {
@@ -278,6 +277,15 @@ export default {
 
 .dashboard-info-content {
   padding-top: 20px;
+}
+
+.overview h1, .cards h1, .transactions h1, .categories h1 {
+  font-family: 'Roboto Light';
+}
+
+.overview, .cards, .transactions, .categories {
+  margin-inline: 10px;
+  margin-top: 10px;
 }
 
 .balance-card {
@@ -502,6 +510,7 @@ export default {
 
 .transactions {
   grid-column: 5/9;
+  grid-row: 3/4;
 }
 
 .new-transaction {
