@@ -1,35 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
-import TransactionsPage from '../views/TransactionsPage.vue'
-import Accounts from '../views/Accounts.vue'
-import Cards from '../views/Cards.vue'
-import Settings from '../views/Settings.vue'
+import SignIn from '../views/SignIn.vue'
 
 const routes = [
   {
-    Path: '/',
+    path: '/',
     name: 'Dashboard',
     component: Dashboard
   },
   {
-    path: '/accounts',
-    name: 'Accounts',
-    component: Accounts
-  },
-  {
-    Path: '/all-transactions',
-    name: 'TransactionsPage',
-    component: TransactionsPage
-  },
-  {
-    path: '/cards',
-    name: Cards,
-    component: Cards
-  },
-  {
-    path: '/settings',
-    name: Settings,
-    component: Settings
+    path: '/sign-in',
+    name: 'SignIn',
+    component: SignIn,
+    meta: {
+      hideNavbar: true,
+    }
   }
 ]
 

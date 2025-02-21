@@ -1,17 +1,16 @@
 /* variables */
 :root {
-  --primary: #4CAF50;
-  --secondary: #1565C0;
+  --primary: #1E293B;
+  --secondary: #FACC15;
   --background: #F4F4F4;
-  --textDark: #212121;
-  --textLight: #fff;
+  --textDark: #64748B;
+  --textLight: #F8FAFC;
 
-  --success: #66BB6A;
-  --error: #E53935;
+  --success: #22C55E;
+  --error: #EF4444;
   --warning: #FFB300;
-  --info: #29B6F6;
+  --border: #94A3B8;
 
-  --primary-shade1: #83C985;
 }
 
 /* reset */
@@ -19,12 +18,41 @@ body,p,a,ul,li {
   margin: 0;
   padding: 0;
   text-decoration: none;
+  font-family: 'Roboto Medium';
 }
 li {
   list-style-type: none;
 }
 h1,h2,h3,h4,h5,h6,p {
   margin: 0;
+}
+
+p {
+  font-family: 'Roboto Light';
+}
+
+h1,h2,h3 {
+  font-family: 'Roboto Medium';
+}
+
+h4,h5,h6 {
+  font-family: 'Roboto Light';
+}
+
+/* fonts */
+@font-face {
+  font-family: 'Roboto Medium';
+  src: url('../assets/fonts/Roboto-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url('../assets/fonts/Roboto-ExtraBold.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto Light';
+  src: url('../assets/fonts/Roboto-Light.ttf');
 }
 
 /* base styles */
@@ -35,13 +63,13 @@ body {
 }
 
 .button {
-  background: none;
+  background: var(--primary);
   border: 2px solid var(--primary);
-  color: var(--primary);
+  color: var(--textLight);
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: 5px;
   text-transform: uppercase;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
+  box-shadow: 10px 12px 13px rgba(0, 0, 0, 0.6);
   display: inline-block;
   cursor: pointer;
 }
@@ -51,27 +79,7 @@ body {
   background: var(--primary)
 }
 
-input, textarea {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 10px 16px;
-  border-radius: 20px;
-  border: 2px solid var(--textDark);
-  color: var(--textDark);
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-}
-
-.icon {
-  cursor: pointer;
-}
-
-.light-icon {
-  color: var(--textLight);
-}
-
-.dark-icon {
-  color: var(--textDark);
 }

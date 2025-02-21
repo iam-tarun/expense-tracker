@@ -1,39 +1,49 @@
-import jwt from 'jsonwebtoken';
+import RedisService from '../config/redis.js'
+import jwtUtil from '../utils/jwt.js';
 
-// Define paths to exclude from authentication
-const excludedPaths = [
-    { path: '/api/register', method: 'POST' },
-    { path: '/api/login', method: 'POST' },
-];
-
-const authMiddleware = (req, res, next) => {
-    // Check if the current route is in the excluded paths
-    const isExcluded = excludedPaths.some(
-        (route) => route.path === req.path && route.method === req.method
-    );
-
-    if (isExcluded) {
-        return next(); // Skip middleware for excluded routes
-    }
-
-    // Get token from Authorization header
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
+const authMiddleware = async function (req, res, next) {
+  const public_re = /^\/api\/public/;
+  const auth_re = /^\/api\/auth/;
+   // check for public routes
+  if (!public_re.test(req.url) && !auth_re.test(req.url)) {
+    // check for jwt token in the https cookies
+    const token = req.cookies.jwtToken;
     if (!token) {
-        return res.status(401).json({ error: 'Access denied, no token provided' });
+      return res.redirect('/api/auth/google')
     }
-
-    try {
-        // Verify the token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        // Add user info to the request object
-        req.user = { id: decoded.userId, username: decoded.username };
-        next(); // Proceed to the next middleware or route handler
-    } catch (error) {
-        return res.status(403).json({ error: 'Invalid or expired token' });
+    const userData = jwtUtil.verifyJWT(token);
+    if (userData && userData.userID) {
+      const value = await RedisService.client.get(`auth:${userData.userID}:jwt`);
+      if (value && value === token) {
+        req.user = userData.userID;
+        return next();
+      }
+      // if there is no jwt token, try to fetch the access token
+      if (!value) {
+        const accessToken = await RedisService.client.get(`auth:${userData.userID}:accessToken`);
+        if (accessToken) {
+          const jwtToken = jwtUtil.generateJWT({
+            userID: userData.userID,
+            email: userData.email
+          });
+          await RedisService.client.set(`auth:${userData.userID}:jwt`, jwtToken, 'EX', 3600);
+          res.cookie('jwtToken', jwtToken, {
+            sameSite: 'Strict',
+            secure: true
+          })
+          req.user = userData.userID;
+          return next();
+        }
+        else {
+          return res.redirect("/api/auth/google")
+        }
+      }
     }
-};
+  }
+  else {
+    return next()
+  }
+
+}
 
 export default authMiddleware;

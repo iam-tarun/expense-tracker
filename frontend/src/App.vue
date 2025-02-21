@@ -1,8 +1,6 @@
 <template>
-  <Navbar class="navbar" />
-  <div class="wrapper grid" >
+  <navbar/>
   <router-view /> 
-  </div>
 </template>
 
 <script>
@@ -17,12 +15,5 @@ export default {
 </script>
 
 <style>
-.navbar {
-  grid-column: 1/9;
-}
-
-.wrapper {
-  grid-column: 1/9;
-}
 
 </style>
