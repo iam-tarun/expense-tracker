@@ -5,18 +5,14 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  username: {
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
     required: true
   },
-  password: {
+  profilePic: {
     type: String,
-    required: true
   }
 }, {timestamps: true});
 
-export default model('User', UserSchema);
+const User = model('User', UserSchema)
+export default User;
